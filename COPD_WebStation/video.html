@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>呼吸操视频</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .video-hero {
+            background: linear-gradient(135deg, #e3f0ff 0%, #c8e6fa 100%);
+            padding: 2rem 1rem 1rem 1rem;
+            text-align: center;
+        }
+        .video-hero h2 {
+            color: #1C64F2;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .video-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0 1rem 0;
+        }
+        .video-tab {
+            padding: 0.6rem 1.5rem;
+            background: #f0f4fa;
+            border-radius: 20px 20px 0 0;
+            color: #357ABD;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .video-tab.active {
+            background: #1C64F2;
+            color: #fff;
+        }
+        .video-content {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 2rem 1rem 1.5rem 1rem;
+            text-align: center;
+        }
+        .video-content h3 {
+            margin-bottom: 1rem;
+            color: #357ABD;
+            font-size: 1.2rem;
+        }
+        .video-content video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+            background: #000;
+        }
+        @media (max-width: 600px) {
+            .video-hero h2 { font-size: 1.3rem; }
+            .video-content { padding: 0.5rem; }
+            .video-content video { max-width: 100%; }
+            .video-tabs { gap: 0.3rem; }
+            .video-tab { padding: 0.5rem 0.7rem; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-hero">
+        <h2>呼吸操视频</h2>
+        <p>科学锻炼呼吸，提升肺功能</p>
+    </div>
+    <div class="video-tabs">
+        <button class="video-tab active" data-tab="0">呼吸操助力</button>
+        <button class="video-tab" data-tab="1">缩唇呼吸怎么做</button>
+        <button class="video-tab" data-tab="2">八段锦功能锻炼</button>
+    </div>
+    <div class="video-content" id="video-content">
+        <h3>呼吸操助力</h3>
+        <video controls poster="video/poster1.jpg">
+            <source src="video/breathing1.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+        </video>
+    </div>
+    <div style="margin:2rem auto;text-align:center;max-width:800px;">
+        <a href="index.html" class="cta-button">返回首页</a>
+    </div>
+    <script>
+        const tabData = [
+            {
+                title: '呼吸操助力',
+                src: 'video/breathing1.mp4',
+                poster: 'video/poster1.jpg'
+            },
+            {
+                title: '缩唇呼吸怎么做',
+                src: 'video/breathing2.mp4',
+                poster: 'video/poster2.jpg'
+            },
+            {
+                title: '八段锦功能锻炼',
+                src: 'video/baduanjin.mp4',
+                poster: 'video/poster3.jpg'
+            }
+        ];
+        const tabs = document.querySelectorAll('.video-tab');
+        const content = document.getElementById('video-content');
+        tabs.forEach((tab, idx) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const data = tabData[idx];
+                content.innerHTML = `<h3>${data.title}</h3><video controls poster="${data.poster}"><source src="${data.src}" type="video/mp4">您的浏览器不支持视频播放。</video>`;
+            });
+        });
+    </script>
+</body>
+</html> 

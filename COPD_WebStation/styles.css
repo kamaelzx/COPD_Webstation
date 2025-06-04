@@ -1,0 +1,615 @@
+/* 全局样式 */
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #2C5282;
+    --accent-color: #63B3ED;
+    --text-color: #2D3748;
+    --light-gray: #EBF8FF;
+    --white: #ffffff;
+    --background-color: #F7FAFD;
+    --card-shadow: 0 4px 16px rgba(74,144,226,0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* 导航栏样式 */
+header {
+    background: var(--background-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo h1 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: none;
+}
+
+.mobile-menu {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* 主要内容样式 */
+main {
+    margin-top: 60px;
+    padding: 0;
+    background: var(--background-color);
+}
+
+.hero {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(135deg, #F7FAFD 0%, #EBF8FF 100%);
+    margin-bottom: 1rem;
+}
+
+.hero-content h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+    color: var(--secondary-color);
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+/* 功能卡片样式 */
+.features {
+    padding: 1rem;
+}
+
+.features h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+.feature-card {
+    background: var(--white);
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 130px;
+    width: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74,144,226,0.15);
+    background: var(--light-gray);
+}
+
+.feature-card i {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.feature-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .feature-grid {
+        gap: 0.8rem;
+        padding: 0 0.3rem;
+    }
+    
+    .feature-card {
+        height: 110px;
+        padding: 0.8rem;
+        min-width: 0;
+    }
+    
+    .feature-card i {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 0.9rem;
+        padding: 0 0.3rem;
+    }
+}
+
+/* 指导部分样式 */
+.guide {
+    padding: 2rem 1rem;
+    background: #f8f9fa;
+}
+
+.guide h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.guide-subtitle {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.guide-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+}
+
+/* 即将推出部分样式 */
+.coming-soon {
+    padding: 2rem 1rem;
+}
+
+.coming-soon h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+.coming-soon-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.coming-soon-item {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.coming-soon-item i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* 页脚样式 */
+footer {
+    background: #2d3748;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-section {
+    text-align: center;
+}
+
+.footer-section h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.social-links a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-links a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .coming-soon-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: center;
+        gap: 4rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .guide-container {
+        height: 700px;
+    }
+}
+
+/* 语言切换按钮样式 */
+.lang-toggle {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 移动端导航菜单 */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mobile-nav.active {
+    display: block;
+}
+
+.mobile-nav a {
+    display: block;
+    padding: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+}
+
+/* 微信特定样式 */
+@media screen and (max-width: 768px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .feature-card {
+        height: 120px;
+        padding: 1rem;
+    }
+    
+    .feature-card i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1rem;
+    }
+    
+    .guide-container {
+        height: 500px;
+        border-radius: 0;
+    }
+}
+
+/* Dify聊天机器人样式 */
+#dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+}
+
+#dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+}
+
+@media (max-width: 768px) {
+    #dify-chatbot-bubble-window {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100vh !important;
+    }
+
+    .guide-container {
+        height: 600px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card,
+.coming-soon-item {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dify-chat {
+    max-width: 600px;
+    margin: 2rem auto 0 auto;
+    background: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+}
+.dify-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    min-height: 200px;
+}
+.dify-message {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+.dify-message.user {
+    text-align: right;
+    color: #4A90E2;
+}
+.dify-message.bot {
+    text-align: left;
+    color: #222;
+}
+.dify-form {
+    display: flex;
+    gap: 0.5rem;
+}
+.dify-form input {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+.dify-form button {
+    background: #4A90E2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.dify-form button:hover {
+    background: #357ABD;
+}
+
+/* 语言切换样式 */
+.en {
+    display: none;
+}
+
+body.en .en {
+    display: block;
+}
+
+body.en .zh {
+    display: none;
+}
+
+/* 药学科普讲堂样式 */
+.science-content {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.science-content h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.tab-btn i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.tab-btn.active i {
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.info-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+}
+
+.info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.info-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.info-card li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.info-card li:before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+}
+
+.info-card.warning {
+    border-left: 4px solid #e53e3e;
+}
+
+.info-card.warning h3 {
+    color: #e53e3e;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .science-content {
+        margin: 1rem auto;
+    }
+
+    .tabs {
+        gap: 0.5rem;
+    }
+
+    .tab-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .info-card {
+        padding: 1rem;
+    }
+} 
