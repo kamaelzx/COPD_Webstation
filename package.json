@@ -1,0 +1,14 @@
+{
+  "name": "copd-ai-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "COPD 慢病管理平台 · 后端 (Express + node:sqlite 内置模块)",
+  "scripts": {
+    "start": "node --experimental-sqlite server/index.js",
+    "dev": "node --experimental-sqlite server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

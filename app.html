@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>COPD 慢病管理平台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="phone">
+
+    <!-- ============ 首页 · 健康驾驶舱 ============ -->
+    <div class="screens">
+      <section class="screen active" id="screen-home">
+        <div class="content">
+          <div class="greeting-area">
+            <h1 class="greeting">COPD慢病管理平台-患者端</h1>
+            <button class="bell-btn" id="bellBtn" aria-label="消息通知">🔔<span class="bell-badge" id="bellBadge" hidden></span></button>
+          </div>
+
+          <!-- 通知面板（点击铃铛展开） -->
+          <div class="notif-panel" id="notifPanel" hidden>
+            <div class="notif-head">
+              <span class="notif-head-title">消息通知</span>
+              <button class="notif-clear" id="notifClear">全部已读</button>
+            </div>
+            <div class="notif-list" id="notifList"></div>
+          </div>
+
+          <p class="date-text" id="homeDate">2026年7月14日 星期二</p>
+
+          <div class="card tip-card">
+            <div class="tip-header">💡 健康小贴士</div>
+            <div class="tip-body">
+              <span class="tag tag-mint" id="tipTag">用药知识</span>
+              <p class="tip-text" id="tipText">吸入后请及时用清水漱口，可明显减少口腔真菌感染与声音嘶哑的发生。</p>
+            </div>
+          </div>
+
+          <div class="quick-actions">
+            <button class="tile" data-nav="inhale-chat">
+              <span class="tile-icon">🫁</span>
+              <span class="tile-label">吸入装置指导</span>
+            </button>
+            <button class="tile" data-nav="lecture">
+              <span class="tile-icon">📚</span>
+              <span class="tile-label">药学科普讲堂</span>
+            </button>
+            <button class="tile" data-nav="breathing">
+              <span class="tile-icon">🧘</span>
+              <span class="tile-label">呼吸操锻炼</span>
+            </button>
+            <button class="tile" data-nav="med">
+              <span class="tile-icon">👨‍⚕️</span>
+              <span class="tile-label">互联网医院</span>
+            </button>
+          </div>
+
+          <div class="reminder-card reminder-card--missed" id="missedCard" hidden>
+            <span class="rem-icon">⚠️</span>
+            <div class="rem-body">
+              <p class="rem-time" id="missedTitle">漏用药品提醒</p>
+              <div class="missed-list" id="missedList"></div>
+            </div>
+          </div>
+
+          <div class="reminder-card" id="homeReminderCard">
+            <span class="rem-icon">⏰</span>
+            <div class="rem-body">
+              <p class="rem-time" id="reminderTime">今日 14:00 · 信必可吸入剂</p>
+              <p class="rem-hint" id="reminderHint">距离下次用药还有 2 小时 18 分钟</p>
+            </div>
+          </div>
+
+          <div class="card ai-card">
+            <div class="ai-header">
+              <span class="ai-icon">✨</span>
+              <span class="ai-title">AI 用药助手</span>
+              <span class="tag tag-mint">智能问答</span>
+            </div>
+            <p class="ai-question">“我的信必可吸入剂用完感觉喉咙干，正常吗？”</p>
+            <div class="ai-btn-row">
+              <button class="btn-primary" data-nav="inhale-chat">开始对话 →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 用药与随访 ============ -->
+      <section class="screen" id="screen-med">
+        <div class="content">
+          <div class="card inhaler-card">
+            <div class="ih-header">
+              <span class="ih-icon">🫁</span>
+              <span class="ih-title">吸入装置 AI 指导</span>
+              <span class="tag tag-mint">AI 指导</span>
+            </div>
+            <img class="ih-device-img" src="assets/images/inhaler-ai-guide.png" alt="吸入装置AI指导">
+            <button class="btn-primary btn-block" data-nav="inhale-chat">开始 AI 指导 →</button>
+          </div>
+
+          <div class="card med-card" id="medCard">
+            <div class="med-item done" data-toggle>
+              <span class="check check-done">✓</span>
+              <div class="med-body">
+                <p class="med-name">信必可吸入剂 160/4.5μg × 2 吸</p>
+                <p class="med-time done-time">08:00 已用药 ✓</p>
+              </div>
+            </div>
+            <div class="med-item" data-toggle>
+              <span class="check check-todo"></span>
+              <div class="med-body">
+                <p class="med-name">噻托溴铵粉吸入剂 18μg × 1 吸</p>
+                <p class="med-time todo-time">14:00 待用药</p>
+              </div>
+            </div>
+            <div class="rem-header-row">
+              <span class="rem-header">今日用药提醒</span>
+              <button class="btn-small" id="openMedSetup">➕ 增加用药计划</button>
+            </div>
+          </div>
+
+          <div class="card pharm-card">
+            <div class="pharm-header">
+              <span class="pharm-icon">👨‍⚕️</span>
+              <span class="pharm-title">门诊药师咨询</span>
+            </div>
+            <p class="pharm-info">周一至周五上午 · 门诊一楼药学门诊诊室<br>免挂号费 / 请携带既往病历和药品</p>
+            <a class="link-more js-open-pharm" id="openPharmDetail" role="button" tabindex="0">查看详情 →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 我的 ============ -->
+      <section class="screen" id="screen-profile">
+        <div class="content">
+          <div class="profile-header">
+            <div class="avatar">张</div>
+            <div class="profile-info">
+              <h2 class="profile-name">张伯</h2>
+              <p class="profile-sub">管理第 218 天</p>
+            </div>
+          </div>
+
+          <div class="card stats-card">
+            <div class="stats-header">我的健康概览</div>
+            <div class="metrics-row">
+              <div class="metric">
+                <div class="metric-val primary">92%</div>
+                <div class="metric-label">用药依从性</div>
+              </div>
+              <div class="metric">
+                <div class="metric-val">12天</div>
+                <div class="metric-label">复诊倒计时</div>
+              </div>
+              <div class="metric">
+                <div class="metric-val mint" id="pointsVal">360</div>
+                <div class="metric-label">健康积分</div>
+                <div class="metric-sub" id="pointsToday"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-label">常用功能</div>
+          <div class="card menu-card">
+            <div class="menu-row" id="openProfile"><span class="menu-icon">⚙️</span><span class="menu-title">个人资料与设置</span><span class="chevron">›</span></div>
+            <div class="divider"></div>
+            <div class="menu-row js-coming-soon" data-feature="病友交流论坛" role="button" tabindex="0"><span class="menu-icon">💬</span><span class="menu-title">病友交流论坛</span><span class="chevron">›</span></div>
+            <div class="divider"></div>
+            <div class="menu-row js-open-pharm" role="button" tabindex="0"><span class="menu-icon">👩‍⚕️</span><span class="menu-title">药师排班信息</span><span class="chevron">›</span></div>
+            <div class="divider"></div>
+            <div class="menu-row js-open-quit" role="button" tabindex="0"><span class="menu-icon">🚭</span><span class="menu-title">戒烟门诊</span><span class="chevron">›</span></div>
+            <div class="divider"></div>
+            <div class="menu-row js-open-help" role="button" tabindex="0"><span class="menu-icon">❓</span><span class="menu-title">帮助与反馈</span><span class="chevron">›</span></div>
+          </div>
+
+          <div class="version">COPD 慢病管理 v2.3.0</div>
+        </div>
+      </section>
+
+      <!-- ============ 呼吸操训练 ============ -->
+      <section class="screen" id="screen-breathing">
+        <div class="content">
+          <section class="card breath-intro">
+            <div class="breath-intro-icon">🧘</div>
+            <div>
+              <h2 class="breath-intro-title">每日呼吸训练</h2>
+              <p class="breath-intro-text">腹式呼吸、缩唇呼吸与八段锦可增强膈肌力量、延缓气道塌陷。坚持练习，能显著减轻活动后的气促感。</p>
+            </div>
+          </section>
+
+          <div class="breath-tabs" role="tablist">
+            <button class="breath-tab active" data-course="breathing" role="tab">呼吸操</button>
+            <button class="breath-tab" data-course="pursed" role="tab">缩唇呼吸</button>
+            <button class="breath-tab" data-course="baduanjin" role="tab">八段锦</button>
+          </div>
+
+          <section class="card breath-video-card">
+            <div class="bframe">
+              <iframe id="breathPlayer" allowfullscreen="true" scrolling="no" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"></iframe>
+              <div class="bframe-loading" id="breathLoading">视频加载中…</div>
+            </div>
+            <div class="breath-meta">
+              <h3 class="breath-title" id="breathTitle">呼吸操</h3>
+              <div class="breath-sub">
+                <span id="breathUp">呼吸与急危重症医学</span>
+                <span class="breath-dot">·</span>
+                <span id="breathDur">2:05</span>
+                <span class="breath-dot">·</span>
+                <a class="breath-bili" id="breathBili" href="https://www.bilibili.com/video/BV1Th4y1C7eQ" target="_blank" rel="noopener">在 B 站打开 ↗</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="card breath-detail" id="breathDesc"></section>
+
+          <section class="card breath-tips">
+            <h3 class="breath-tips-title">💡 练习要点</h3>
+            <ul class="breath-tips-list" id="breathTips"></ul>
+          </section>
+
+          <section class="card breath-note">
+            <span class="breath-note-ico">⚠️</span>
+            <span>训练前请咨询医生。若出现胸痛、持续头晕或其他不适，请立即停止并咨询医务人员。</span>
+          </section>
+        </div>
+      </section>
+
+      <!-- ============ 科普讲座 ============ -->
+      <section class="screen" id="screen-lecture">
+        <div class="content">
+          <section class="card lec-intro">
+            <div class="lec-intro-icon">🎓</div>
+            <div>
+              <h2 class="lec-intro-title">慢阻肺科普</h2>
+              <p class="lec-intro-text">慢阻肺疾病规范治疗与康复科普视频，帮你科学认识、主动管理慢阻肺。</p>
+            </div>
+          </section>
+
+          <div class="lec-grid" id="lecGrid"></div>
+        </div>
+
+        <!-- 页内播放器 -->
+        <div class="lec-player" id="lecPlayer" hidden>
+          <div class="lec-player-bar">
+            <button class="screen-back" id="lecPlayerBack" aria-label="返回列表">‹</button>
+            <div class="lec-player-title" id="lecPlayerTitle">视频</div>
+          </div>
+          <div class="lec-player-body">
+            <div class="lec-player-frame">
+              <iframe id="lecPlayerFrame" allowfullscreen="true" scrolling="no" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"></iframe>
+            </div>
+            <div class="card lec-player-meta">
+              <h3 id="lecPlayerName"></h3>
+              <div class="breath-sub">
+                <span id="lecPlayerUp"></span>
+                <span>·</span>
+                <a class="breath-bili" id="lecPlayerBili" href="#" target="_blank" rel="noopener">在 B 站打开 ↗</a>
+              </div>
+              <p class="lec-player-tip">⚠️ 视频内容仅作健康科普参考，具体诊疗与用药方案请遵循主治医师及医师或药师指导。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 吸入装置指导 · 自写聊天 UI（方案 C，直连 Dify） ============ -->
+      <section class="screen" id="screen-inhale-chat">
+        <div class="chat-head">
+          <button class="screen-back" data-nav="home" aria-label="返回">‹</button>
+          <div class="chat-head-main">
+            <div class="chat-head-title">吸入装置 AI 指导</div>
+            <div class="chat-head-sub">智能问答 · 7×24 在线</div>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chatMsgs"></div>
+        <div class="chat-input-bar">
+          <textarea id="chatInput" class="chat-input" rows="1" placeholder="描述您的问题，如：信必可怎么用？" aria-label="输入问题"></textarea>
+          <button class="chat-send" id="chatSend" aria-label="发送">➤</button>
+        </div>
+        <div class="chat-tip">本助手内容仅供参考，具体用药与装置使用请遵循医师或药师指导。</div>
+      </section>
+    </div>
+
+    <!-- ============ 底部 Pill Tab Bar ============ -->
+    <nav class="tab-bar">
+      <div class="pill-tab-bar">
+        <button class="tab active" data-target="home">
+          <span class="tab-icon">🏠</span>
+          <span class="tab-label">首页</span>
+        </button>
+        <button class="tab" data-target="med">
+          <span class="tab-icon">💊</span>
+          <span class="tab-label">用药与随访</span>
+        </button>
+        <button class="tab" data-target="profile">
+          <span class="tab-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="profMetalOrange" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#F2A65A"/>
+                  <stop offset="50%" stop-color="#E07B39"/>
+                  <stop offset="100%" stop-color="#B5571F"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z"/>
+            </svg>
+          </span>
+          <span class="tab-label">我的</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ============ 登录 / 注册 全屏 ============ -->
+    <div class="auth-screen hidden" id="authScreen">
+      <div class="auth-card">
+        <div class="auth-logo">🫁</div>
+        <h1 class="auth-title">COPD 慢病管理</h1>
+        <p class="auth-sub">科学管理，自由呼吸</p>
+
+        <div class="auth-form" id="loginForm">
+          <label>手机号
+            <input id="authPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="请输入手机号">
+          </label>
+          <label>密码
+            <span class="pw-wrap">
+              <input id="authPassword" type="password" placeholder="请输入密码">
+              <button type="button" class="pw-toggle" data-target="authPassword" aria-label="显示密码">👁</button>
+            </span>
+          </label>
+          <button class="btn-primary btn-block" id="authLoginBtn">登录</button>
+          <p class="auth-switch">还没有账号？<a id="toRegister">去注册</a></p>
+        </div>
+
+        <div class="auth-form hidden" id="registerForm">
+          <label>手机号
+            <input id="regPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="请输入手机号">
+          </label>
+          <label>姓名
+            <input id="regName" type="text" placeholder="请输入您的称呼">
+          </label>
+          <label>密码
+            <span class="pw-wrap">
+              <input id="regPassword" type="password" placeholder="设置密码（至少 6 位）">
+              <button type="button" class="pw-toggle" data-target="regPassword" aria-label="显示密码">👁</button>
+            </span>
+          </label>
+          <button class="btn-primary btn-block" id="authRegisterBtn">注册并登录</button>
+          <p class="auth-switch">已有账号？<a id="toLogin">去登录</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 增加用药计划弹窗 -->
+    <div class="modal-mask" id="medModal" hidden>
+      <div class="modal">
+        <div class="modal-header">增加用药计划</div>
+        <div class="modal-body">
+          <label>药品名称<input id="medName" placeholder="如：信必可吸入剂"></label>
+          <label>剂量 / 规格<input id="medDose" placeholder="如：160/4.5μg × 2 吸"></label>
+          <label class="tp-label">用药时间
+            <div class="time-picker" id="medTimePicker">
+              <div class="tp-col" id="tpHour"><div class="tp-track" id="tpHourTrack"></div></div>
+              <div class="tp-colon">:</div>
+              <div class="tp-col" id="tpMinute"><div class="tp-track" id="tpMinuteTrack"></div></div>
+              <div class="tp-indicator"></div>
+            </div>
+          </label>
+          <input type="hidden" id="medTime" value="">
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" id="cancelMed">取消</button>
+          <button class="btn-primary flex1" id="saveMed">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 门诊药师咨询 · 详情弹窗 -->
+    <div class="modal-mask" id="pharmModal" hidden>
+      <div class="modal modal--detail">
+        <div class="modal-header">药师排班信息<span class="modal-close" id="pharmClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 挂号科室</div>
+            <div class="pharm-sec-body">药学门诊（药学咨询号）</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 挂号方式</div>
+            <div class="pharm-sec-body">人工窗口挂号（免费）/ 自助机挂号（免费）</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 开诊时间</div>
+            <div class="pharm-sec-body">每周一至周五上午，法定节假日除外</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 就诊地点</div>
+            <div class="pharm-sec-body">门诊一楼药学门诊诊室（门诊药房斜对面）</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 就诊时注意事项</div>
+            <div class="pharm-sec-body">
+              药学门诊不能开药，只提供相关药学服务。<br>
+              建议就诊时携带好既往病历、处方、报告和使用的药品。<br>
+              医院药学门诊由具有丰富用药经验的临床药师出诊，为患者提供用药评估、用药咨询、用药教育、用药方案调整、随访管理等一系列专业化药学服务，旨在提高患者用药依从性，保障患者用药安全有效。
+            </div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 服务对象</div>
+            <ul class="pharm-list">
+              <li>老年人、儿童、妊娠期和哺乳期妇女等特殊人群</li>
+              <li>近期接受治疗出现药物不良反应的患者</li>
+              <li>服用药物导致实验室检查异常的患者，如肝肾功能异常</li>
+              <li>服用 5 种及 5 种以上慢性病治疗药物的患者</li>
+              <li>同时接受不同医师处方的患者</li>
+              <li>正在服用高风险药物（如抗凝药物），有出血、药物中毒等风险的患者</li>
+              <li>药物治疗依从性不好的患者</li>
+              <li>合并疼痛、恶心呕吐及血栓等并发症的肿瘤患者</li>
+            </ul>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 服务内容</div>
+            <ul class="pharm-list">
+              <li>特殊患者用药管理：如孕妇、哺乳期妇女及儿童等</li>
+              <li>提供个体化用药教育，指导正确使用药物，包括呼吸装置的使用等</li>
+              <li>防范及鉴别药物不良反应</li>
+              <li>指导树立健康的生活方式，包括合理膳食等</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary flex1" id="pharmOk">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 戒烟门诊 · 详情弹窗 -->
+    <div class="modal-mask" id="quitModal" hidden>
+      <div class="modal modal--detail">
+        <div class="modal-header">戒烟门诊<span class="modal-close" id="quitClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 开诊时间</div>
+            <div class="pharm-sec-body">每周二、周四上午 8:00–11:30（法定节假日除外）</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 就诊地点</div>
+            <div class="pharm-sec-body">门诊二楼 呼吸与危重症医学科 · 戒烟门诊诊室</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 挂号方式</div>
+            <div class="pharm-sec-body">人工窗口 / 自助机挂「戒烟门诊」号；支持医院公众号提前预约</div>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 服务对象</div>
+            <ul class="pharm-list">
+              <li>有明确戒烟意愿、希望获得专业帮助的吸烟者</li>
+              <li>多次自行戒烟失败、存在尼古丁依赖者</li>
+              <li>合并慢阻肺、哮喘、冠心病等吸烟相关疾病的患者</li>
+              <li>备孕、孕期及哺乳期家庭的配偶吸烟者可携家属共同就诊</li>
+            </ul>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 服务内容</div>
+            <ul class="pharm-list">
+              <li>吸烟成瘾评估（FTND 量表）与一氧化碳（CO）呼气检测</li>
+              <li>制定个体化戒烟方案：行为干预 + 药物辅助（尼古丁替代、伐尼克兰等）</li>
+              <li>戒断症状管理（焦虑、失眠、注意力不集中、食欲增加等）</li>
+              <li>复吸预防与定期随访：首月每周、之后每月复诊</li>
+              <li>结合慢阻肺管理，指导吸入装置正确使用与肺康复</li>
+            </ul>
+          </div>
+          <div class="pharm-sec">
+            <div class="pharm-sec-title">⭐ 温馨提示</div>
+            <div class="pharm-sec-body">
+              戒烟可显著减缓肺功能下降、降低慢阻肺急性加重风险。<br>
+              建议首次就诊前记录每日吸烟量与触发场景，便于医生评估。<br>
+              家属陪伴与鼓励可明显提高长期戒烟成功率。
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary flex1" id="quitOk">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 帮助与反馈 · 弹窗 -->
+    <div class="modal-mask" id="helpModal" hidden>
+      <div class="modal modal--detail">
+        <div class="modal-header">帮助与反馈<span class="modal-close" id="helpClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="help-sec">
+            <div class="help-sec-title">📘 应用使用指南</div>
+            <ul class="help-list">
+              <li><b>首页</b>：查看今日打卡、用药依从率与健康积分</li>
+              <li><b>用药与随访</b>：设置每日用药计划，到点自动提醒</li>
+              <li><b>呼吸操训练</b>：跟随视频每日练习，改善呼吸功能</li>
+              <li><b>科普讲堂</b>：获取权威的慢病管理科普知识</li>
+            </ul>
+          </div>
+          <div class="help-sec">
+            <div class="help-sec-title">❓ 常见问题</div>
+            <ul class="help-list">
+              <li><b>会收到提醒吗？</b>系统会在「当日用药未完成」「复诊前 3 天」自动推送通知。</li>
+              <li><b>数据会丢失吗？</b>数据与本账户绑定，请保持登录，避免清除浏览器数据。</li>
+              <li><b>如何修改复诊日期？</b>进入「个人资料与设置 → 随访管理」即可修改。</li>
+            </ul>
+          </div>
+          <div class="help-sec">
+            <div class="help-sec-title">✉️ 意见反馈</div>
+            <div class="help-sec-body">使用中有任何建议、问题或遇到 Bug，欢迎随时反馈，我们会认真阅读每一条留言。</div>
+            <a class="help-mail" href="mailto:405004051@qq.com?subject=COPD慢病管理App反馈">✉️ 405004051@qq.com</a>
+            <div class="help-sec-body help-tip">邮件请备注：用户名 / 遇到的问题 / 相关截图（如有）。</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary flex1" id="helpOk">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 功能开发中 · 通用弹窗 -->
+    <div class="modal-mask" id="comingSoonModal" hidden>
+      <div class="modal modal--coming">
+        <div class="modal-body coming-body">
+          <div class="coming-icon">🚧</div>
+          <div class="coming-title" id="comingTitle">功能开发中</div>
+          <div class="coming-desc" id="comingDesc">功能正在开发，敬请期待</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary flex1" id="comingOk">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 个人资料与设置 · 设置列表（仅留「修改密码」入口） -->
+    <div class="modal-mask" id="profileModal" hidden>
+      <div class="modal">
+        <div class="modal-header">个人资料与设置<span class="modal-close" id="profileClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="settings-list">
+            <div class="settings-row" id="openEditProfile">
+              <span class="settings-icon">👤</span>
+              <span class="settings-title">编辑资料</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row settings-row--notify" id="rowNotify">
+              <span class="settings-icon">🔔</span>
+              <span class="settings-title">消息通知</span>
+              <label class="switch"><input type="checkbox" id="pfNotify"><span class="slider"></span></label>
+            </div>
+            <div class="settings-row" id="openFollowUp">
+              <span class="settings-icon">📅</span>
+              <span class="settings-title">下次随访时间</span>
+              <span class="settings-value" id="followUpVal">未设置</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row" id="openChangePwd">
+              <span class="settings-icon">🔒</span>
+              <span class="settings-title">修改密码</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row" id="openResetAdherence">
+              <span class="settings-icon">♻️</span>
+              <span class="settings-title">用药依从性重置</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row" id="openLogout">
+              <span class="settings-icon">🚪</span>
+              <span class="settings-title">退出登录</span>
+              <span class="chevron">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 用药依从性重置 · 确认弹窗 -->
+    <div class="modal-mask" id="resetAdherenceModal" hidden>
+      <div class="modal">
+        <div class="modal-header">用药依从性重置<span class="modal-close" id="resetAdherenceClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="reset-warn">⚠️ 此操作将清除您全部的用药打卡记录，用药依从率将重置为 0，且不可恢复。</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost flex1" id="resetAdherenceCancelBtn">取消</button>
+          <button class="btn-danger flex1" id="resetAdherenceConfirm">确认重置</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 退出登录 · 确认弹窗 -->
+    <div class="modal-mask" id="logoutModal" hidden>
+      <div class="modal">
+        <div class="modal-header">退出登录<span class="modal-close" id="logoutModalClose" aria-label="关闭">✕</span></div>
+        <div class="modal-body">
+          <div class="reset-warn">确定要退出当前账号吗？退出后需重新登录才能查看您的健康数据。</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost flex1" id="logoutModalCancel">取消</button>
+          <button class="btn-danger flex1" id="logoutModalConfirm">确认退出</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 编辑资料 · 独立页面 -->
+    <div class="modal-mask" id="editProfileModal" hidden>
+      <div class="modal">
+        <div class="modal-header modal-header--back">
+          <span class="modal-back" id="editProfileBack" aria-label="返回">‹</span>
+          <span class="modal-title">编辑资料</span>
+        </div>
+        <div class="modal-body">
+          <label>姓名<input id="pfName" placeholder="请输入姓名"></label>
+          <label>性别
+            <select id="pfGender">
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
+          </label>
+          <label>出生日期<input id="pfBirthday" type="date"></label>
+          <label>手机号<input id="pfPhone" readonly></label>
+          <label>诊断<input id="pfDiagnosis" placeholder="如：COPD"></label>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" id="editProfileCancel">取消</button>
+          <button class="btn-primary flex1" id="editProfileSave">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 下次随访时间 · 独立页面 -->
+    <div class="modal-mask" id="followUpModal" hidden>
+      <div class="modal">
+        <div class="modal-header modal-header--back">
+          <span class="modal-back" id="followUpBack" aria-label="返回">‹</span>
+          <span class="modal-title">下次随访时间</span>
+        </div>
+        <div class="modal-body">
+          <label>随访日期<input id="followUpDate" type="date"></label>
+          <p class="followup-hint" id="followUpHint">请选择下次随访日期，用于计算复诊倒计时</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" id="followUpCancel">取消</button>
+          <button class="btn-primary flex1" id="followUpSave">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 修改密码 · 独立页面 -->
+    <div class="modal-mask" id="passwordModal" hidden>
+      <div class="modal">
+        <div class="modal-header modal-header--back">
+          <span class="modal-back" id="pwdBack" aria-label="返回">‹</span>
+          <span class="modal-title">修改密码</span>
+        </div>
+        <div class="modal-body">
+          <label>当前密码
+            <span class="pw-wrap">
+              <input id="pwdCur" type="password" placeholder="请输入当前密码">
+              <button type="button" class="pw-toggle" data-target="pwdCur" aria-label="显示密码">👁</button>
+            </span>
+          </label>
+          <label>新密码
+            <span class="pw-wrap">
+              <input id="pwdNew" type="password" placeholder="至少 6 位">
+              <button type="button" class="pw-toggle" data-target="pwdNew" aria-label="显示密码">👁</button>
+            </span>
+          </label>
+          <label>确认新密码
+            <span class="pw-wrap">
+              <input id="pwdNew2" type="password" placeholder="再次输入新密码">
+              <button type="button" class="pw-toggle" data-target="pwdNew2" aria-label="显示密码">👁</button>
+            </span>
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" id="pwdCancel">取消</button>
+          <button class="btn-primary flex1" id="pwdSave">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
