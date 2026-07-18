@@ -7,8 +7,6 @@ node_modules/
 # 用户数据库（含隐私健康数据）
 server/data/
 
-# 打包备份（可能含密钥，由用户自行处理）
-copd.zip
 
 # 助手工作记忆（非运行必需）
 .workbuddy/
@@ -18,5 +16,3 @@ generated-images/
 
 # 运行时日志（非源码，不纳入版本控制）
 *.log
-
-.gitignore
